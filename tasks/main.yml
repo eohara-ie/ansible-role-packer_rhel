@@ -58,13 +58,16 @@
     group: vagrant
     mode: 0700
 
-- name: Get Vagrant's public key.
-  get_url:
-    url: https://github.com/mitchellh/vagrant/raw/master/keys/vagrant.pub
-    dest: /home/vagrant/.ssh/authorized_keys
+- name: Touch authorized_keys file.
+  file:
+    path: /home/vagrant/.ssh/authorized_keys
+    state: touch
     owner: vagrant
     group: vagrant
     mode: 0600
+
+- name: Write Vagrant's public key to file.
+  command: "echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key' > /home/vagrant/.ssh/authorized_keys"
 
 # VirtualBox tools installation.
 - name: Check if VirtualBox is running the guest VM.
